@@ -6,7 +6,17 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from faker import Faker
 
+class VmgirlUserAgentDownloadMiddleware(object):
+
+    def process_request(self, request, spider):
+        ua = Faker().chrome()
+        print('=' * 30)
+        print('ua = ', ua)
+        print('=' * 30)
+
+        request.headers['User-Agent'] = ua
 
 class VmgirlsSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
