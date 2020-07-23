@@ -3,6 +3,8 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 
+from lxml import etree
+
 
 class VmgirlsSpiderSpider(CrawlSpider):
     name = 'vmgirls_spider'
@@ -15,8 +17,17 @@ class VmgirlsSpiderSpider(CrawlSpider):
     )
 
     def parse(self, response):
+        # print('=' * 30)
+        # print(response)
+        # print('=' * 30)
+
+        text = etree.HTML(response.text)
+        title_list = text.xpath('/html/body/header/nav/div/div/ul/li/a/text()')
+
+        url_list = text.xpath('/html/body/header/nav/div/div/ul/li/a/@href')
+
         print('=' * 30)
-        print(response)
+        print(url_list)
         print('=' * 30)
 
     def parse_item(self, response):
